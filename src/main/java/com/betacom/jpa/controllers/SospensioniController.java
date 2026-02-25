@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("rest/marca/")
+@RequestMapping("rest/sospensioni/")
 public class SospensioniController {
 
     private final ISospensioniServices sospensioniServices;
