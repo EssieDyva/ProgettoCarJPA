@@ -8,9 +8,11 @@ import com.betacom.jpa.dto.outputs.MarcaDTO;
 
 public interface IMarcaServices {
 
-	List<MarcaDTO> listMarche();
+
 
 	void create(MarcaRequest req) throws Exception;
 	void update(MarcaRequest req) throws Exception;
 	void delete(Integer id) throws Exception;
+
+	List<MarcaDTO> list();
 }

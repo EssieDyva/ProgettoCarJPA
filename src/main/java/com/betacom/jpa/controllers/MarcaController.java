@@ -30,7 +30,7 @@ public class MarcaController {
         HttpStatus status = HttpStatus.OK;
 
         try {
-            r = marcaServices.listMarche();
+            r = marcaServices.list();
         } catch (Exception e) {
             r = e.getMessage();
             status = HttpStatus.BAD_REQUEST;
