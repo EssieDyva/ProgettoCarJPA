@@ -17,6 +17,8 @@ public class TipoAlimentazione {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(unique = true)
+	@Column(
+		name = "descrizione",
+		unique = true)
 	private String description;
 }

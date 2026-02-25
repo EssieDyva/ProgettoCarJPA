@@ -28,7 +28,7 @@ public class CategoriaController {
         } catch (Exception e) {
             r.setMsg("Errore: " + e.getMessage());
             status = HttpStatus.BAD_REQUEST;
-            return ResponseEntity.badRequest().body(r);
+            return ResponseEntity.status(status).body(r);
            
         }
     }
