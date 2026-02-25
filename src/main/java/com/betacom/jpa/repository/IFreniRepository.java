@@ -1,5 +1,13 @@
 package com.betacom.jpa.repository;
 
-public interface IFreniRepository {
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.betacom.jpa.models.Freni;
+
+@Repository
+public interface IFreniRepository extends JpaRepository<Freni, Integer>{
 
 }
