@@ -33,9 +33,30 @@ public class CategoriaController {
         }
     }
     
+    @PutMapping("/update")
+    public ResponseEntity<Resp> update(@RequestBody CategoriaRequest request) {
+        Resp r = new Resp();
+        HttpStatus status = HttpStatus.OK;
+        try {
+            categoriaServices.update(request);
+            r.setMsg("Categoria aggiornata con successo");
+        } catch (Exception e) {
+            r.setMsg("Errore nell'aggiornamento: " + e.getMessage());
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return ResponseEntity.status(status).body(r);
+    }
     @GetMapping("/list")
     public ResponseEntity<Object> list() {
-        return ResponseEntity.ok(categoriaServices.findAll());
+        Object r;
+        HttpStatus status = HttpStatus.OK;
+        try {
+            r = categoriaServices.findAll(); 
+        } catch (Exception e) {
+            r = e.getMessage();
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return ResponseEntity.status(status).body(r);
     }
     @DeleteMapping("delete/{id}")
 	public ResponseEntity<Resp> delete(@PathVariable Integer id) {
