@@ -1,6 +1,7 @@
 package com.betacom.jpa.services.implementations;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -56,7 +57,14 @@ public class MotoImpl implements IMotoServices {
     @Transactional(rollbackFor = AcademyException.class)
     public void delete(Integer id) throws Exception {
         log.debug("delete {}", id);
+        Optional<Moto> m = motoR.findById(id); 
+        
+        if(m.isEmpty()) {
+            throw new AcademyException("Marca non trovata in DB");
+        }
+        
         motoR.deleteById(id);
+        veiR.deleteById(id);
     }
 
     @Override
