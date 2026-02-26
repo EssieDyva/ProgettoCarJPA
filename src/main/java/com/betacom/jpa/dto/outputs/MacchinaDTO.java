@@ -1,13 +1,15 @@
 package com.betacom.jpa.dto.outputs;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
-@Data
-@Builder
-@ToString
-public class MacchinaDTO {
+@Getter
+@Setter
+@SuperBuilder
+@ToString(callSuper = true)
+public class MacchinaDTO extends VeicoliDTO{
 
 	private Integer id;
 	private Integer porte;
