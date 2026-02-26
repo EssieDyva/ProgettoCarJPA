@@ -12,11 +12,7 @@ import com.betacom.jpa.dto.outputs.MotoDTO;
 import com.betacom.jpa.exception.AcademyException;
 import com.betacom.jpa.models.Moto;
 import com.betacom.jpa.models.Veicoli;
-import com.betacom.jpa.repository.ICategoriaRepository;
-import com.betacom.jpa.repository.IColoreRepository;
-import com.betacom.jpa.repository.IMarcaRepository;
 import com.betacom.jpa.repository.IMotoRepository;
-import com.betacom.jpa.repository.ITipoAlimentazioneRepository;
 import com.betacom.jpa.repository.IVeicoliRepository;
 import com.betacom.jpa.services.interfaces.IMotoServices;
 import com.betacom.jpa.services.interfaces.IVeicoliServices;
@@ -31,10 +27,6 @@ public class MotoImpl implements IMotoServices {
 
     private final IMotoRepository motoR;
     private final IVeicoliRepository veiR;
-    private final ICategoriaRepository catR;
-    private final ITipoAlimentazioneRepository taR;
-    private final IColoreRepository colR;
-    private final IMarcaRepository marR;
     private final IVeicoliServices veiS;
 
     @Override
@@ -62,30 +54,8 @@ public class MotoImpl implements IMotoServices {
         moto.setTarga(req.getTarga());
         moto.setCc(req.getCc());
         
-        Veicoli v = moto.getVeicoli();
-        if (v != null) {
-            v.setTipoVeicolo(req.getTipoVeicolo());
-            v.setNumeroRuote(req.getNumeroRuote());
-            if (req.getTipoAlimentazioneId() != null) {
-                v.setTipoAlimentazione(taR.findById(req.getTipoAlimentazioneId())
-                        .orElseThrow(() -> new AcademyException("Tipo alimentazione non trovato")));
-            }
-            if (req.getCategoriaId() != null) {
-                v.setCategoria(catR.findById(req.getCategoriaId())
-                        .orElseThrow(() -> new AcademyException("Categoria non trovata")));
-            }
-            if (req.getColoreId() != null) {
-                v.setColore(colR.findById(req.getColoreId())
-                        .orElseThrow(() -> new AcademyException("Colore non trovato")));
-            }
-            if (req.getMarcaId() != null) {
-                v.setMarca(marR.findById(req.getMarcaId())
-                        .orElseThrow(() -> new AcademyException("Marca non trovata")));
-            }
-            v.setAnnoProduzione(req.getAnnoProduzione());
-            v.setModello(req.getModello());
-            veiR.save(v);
-        }
+        veiS.update(req);
+
         motoR.save(moto);
     }
 

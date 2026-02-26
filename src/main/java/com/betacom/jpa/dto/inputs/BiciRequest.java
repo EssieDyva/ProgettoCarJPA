@@ -1,7 +1,5 @@
 package com.betacom.jpa.dto.inputs;
 
-import com.betacom.jpa.models.Freni;
-import com.betacom.jpa.models.Sospensioni;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,8 +11,8 @@ public class BiciRequest extends VeicoliRequest {
 	
 	private Integer id;	
     private Integer numeroMarce;
-    private Freni idFreno;
-    private Sospensioni idSospensioni;
+    private Integer idFreno;
+    private Integer idSospensioni;
     private Boolean isPieghevole;
 
 }
