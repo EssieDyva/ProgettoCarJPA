@@ -66,7 +66,7 @@ public class ColoreImpl implements IColoreServices {
 	
 
 	@Override
-	public List<ColoreDTO> list() {
+	public List<ColoreDTO> list() throws Exception {
 		log.debug("list {}");
 		List<Colore> lC = colR.findAll();
 		return lC.stream()

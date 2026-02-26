@@ -36,6 +36,7 @@ public class BiciImpl implements IBiciServices  {
 		bici.setIdSospensioni(req.getIdSospensioni());
 		bici.setIsPieghevole(req.getIsPieghevole());
 		bici.setNumeroMarce(req.getNumeroMarce());
+		bici.setVeicoli(v);
 		
 		bicR.save(bici);
 		

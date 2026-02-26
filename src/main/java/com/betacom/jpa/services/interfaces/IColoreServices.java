@@ -10,6 +10,6 @@ public interface IColoreServices {
 	void update(ColoreRequest req) throws Exception;
 	void delete(Integer id) throws Exception;
 	
-	List<ColoreDTO> list();
+	List<ColoreDTO> list() throws Exception;
 
 }
