@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class BiciRequest {
+public class BiciRequest extends VeicoliRequest {
 	
 	private Integer id;	
     private Integer numeroMarce;
