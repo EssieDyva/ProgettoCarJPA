@@ -37,7 +37,7 @@ public class BiciImpl implements IBiciServices {
 		log.debug("create {}", req);
 
 		ValidateBiciIds(req);
-		
+
 		veiS.create(req);
 		Veicoli v = veiR.findById(req.getId())
 				.orElseThrow(() -> new AcademyException("veicolo non trovato dopo creazione"));
@@ -60,7 +60,7 @@ public class BiciImpl implements IBiciServices {
 				.orElseThrow(() -> new AcademyException("Bici non trovata"));
 
 		ValidateBiciIds(req);
-		
+
 		bici.setIdFreno(frenR.findById(req.getIdFreno()).get());
 		bici.setIdSospensioni(sospR.findById(req.getIdSospensioni()).get());
 		bici.setIsPieghevole(req.getIsPieghevole());
@@ -88,7 +88,15 @@ public class BiciImpl implements IBiciServices {
 		List<Bici> lB = bicR.findAll();
 		return lB.stream()
 				.map(b -> BiciDTO.builder()
-						.id(b.getId())
+						.id(b.getVeicoli().getId())
+						.tipoVeicolo(b.getVeicoli().getTipoVeicolo())
+						.numeroRuote(b.getVeicoli().getNumeroRuote())
+						.tipoAlimentazioneId(b.getVeicoli().getTipoAlimentazione().getId())
+						.categoriaId(b.getVeicoli().getCategoria().getId())
+						.coloreId(b.getVeicoli().getColore().getId())
+						.marcaId(b.getVeicoli().getMarca().getId())
+						.annoProduzione(b.getVeicoli().getAnnoProduzione())
+						.modello(b.getVeicoli().getModello())
 						.idFreno(b.getIdFreno())
 						.idSospensioni(b.getIdSospensioni())
 						.isPieghevole(b.getIsPieghevole())
@@ -103,7 +111,7 @@ public class BiciImpl implements IBiciServices {
 
 			throw new AcademyException("Freno o Sospensioni non trovati in DB");
 		}
-	
+
 	}
 
 }
