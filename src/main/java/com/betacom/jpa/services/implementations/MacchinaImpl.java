@@ -88,6 +88,7 @@ public class MacchinaImpl implements IMacchinaServices {
             v.setAnnoProduzione(req.getAnnoProduzione());
             v.setModello(req.getModello());
             veiR.save(v);
+            
         }
 
         maccR.save(macchina);
