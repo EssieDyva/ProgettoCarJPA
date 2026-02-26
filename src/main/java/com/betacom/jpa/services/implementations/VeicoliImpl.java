@@ -2,6 +2,7 @@ package com.betacom.jpa.services.implementations;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -108,7 +109,7 @@ public class VeicoliImpl implements IVeicoliServices {
                         .annoProduzione(v.getAnnoProduzione())
                         .modello(v.getModello())
                         .build())
-                .toList();
+                .collect(Collectors.toList());
     }
 
     private void validateIds(VeicoliRequest req) throws AcademyException {

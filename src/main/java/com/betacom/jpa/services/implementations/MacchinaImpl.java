@@ -112,12 +112,21 @@ public class MacchinaImpl implements IMacchinaServices {
         log.debug("listMacchine");
         List<Macchina> lm =  maccR.findAll();
         return lm.stream()
-                .map(m -> MacchinaDTO.builder()
-                        .id(m.getId())
-                        .porte(m.getPorte())
-                        .cilindrata(m.getCilindrata())
-                        .targa(m.getTarga())
-                        .build())
-                .collect(Collectors.toList());
-    }
+            .map(m -> MacchinaDTO.builder()
+                    .id(m.getVeicoli().getId())
+                    .tipoVeicolo(m.getVeicoli().getTipoVeicolo())
+                    .numeroRuote(m.getVeicoli().getNumeroRuote())
+                    .tipoAlimentazioneId(m.getVeicoli().getTipoAlimentazione().getId())
+                    .categoriaId(m.getVeicoli().getCategoria().getId())
+                    .coloreId(m.getVeicoli().getColore().getId())
+                    .marcaId(m.getVeicoli().getMarca().getId())
+                    .annoProduzione(m.getVeicoli().getAnnoProduzione())
+                    .modello(m.getVeicoli().getModello())
+                    .porte(m.getPorte())
+                    .cilindrata(m.getCilindrata())
+                    .targa(m.getTarga())
+                    .build()
+            )
+            .collect(Collectors.toList());
+        }
 }

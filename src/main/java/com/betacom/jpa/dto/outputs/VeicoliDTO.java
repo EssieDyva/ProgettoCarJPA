@@ -1,11 +1,11 @@
 package com.betacom.jpa.dto.outputs;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
 @ToString
 public class VeicoliDTO {
 
