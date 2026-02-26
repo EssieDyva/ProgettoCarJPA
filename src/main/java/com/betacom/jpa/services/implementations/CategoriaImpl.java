@@ -16,6 +16,7 @@ import com.betacom.jpa.services.interfaces.ICategoriaServices;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -28,9 +29,11 @@ public class CategoriaImpl implements ICategoriaServices {
     public Integer create(CategoriaRequest req) throws AcademyException {
     	log.debug("create {}", req);
     	
-        if (req.getDescrizione() == null) {
-            throw new AcademyException("Descrizione");
-        }
+        Boolean exist = categoriaR.findByDescrizione(req.getDescrizione());
+		
+		if (exist != null)
+			throw new AcademyException("Categoria già presente in DB");
+
         Categoria cat = new Categoria();
         cat.setDescrizione(req.getDescrizione());
         return categoriaR.save(cat).getId();

@@ -1,7 +1,6 @@
 package com.betacom.jpa.services.implementations;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -27,14 +26,14 @@ public class ColoreImpl implements IColoreServices {
 	@Transactional (rollbackFor = AcademyException.class)
 	@Override
 	public void create(ColoreRequest req) throws Exception {
-		log.debug("create []", req);
-		Boolean exists = colR.findByDescription(req.getDescription().trim().toUpperCase());
+		log.debug("create {}", req);
+		Boolean exists = colR.findByDescription(req.getDescription());
 		
-		if(exists)
+		if(exists != null)
 			throw new AcademyException("Colore presente in db:" + req.getDescription());
 		
 		Colore co = new Colore();
-		co.setDescription(req.getDescription().trim().toUpperCase());
+		co.setDescription(req.getDescription());
 		
 		colR.save(co);
 	}

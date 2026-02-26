@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.betacom.jpa.dto.inputs.MacchinaRequest;
-import com.betacom.jpa.dto.inputs.MarcaRequest;
 import com.betacom.jpa.response.Resp;
 import com.betacom.jpa.services.interfaces.IMacchinaServices;
-import com.betacom.jpa.services.interfaces.IMarcaServices;
 
 import lombok.RequiredArgsConstructor;
 
@@ -80,7 +78,7 @@ public class MacchinaController {
 
         try {
             macchinaServices.delete(id);
-            r.setMsg("Macchinacancellata");
+            r.setMsg("Macchina cancellata");
         } catch (Exception e) {
             r.setMsg("Errore nella cancellazione " + e.getMessage());
             status = HttpStatus.BAD_REQUEST;

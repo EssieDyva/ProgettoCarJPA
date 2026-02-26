@@ -7,4 +7,5 @@ import com.betacom.jpa.models.Categoria;
 @Repository
 public interface ICategoriaRepository extends JpaRepository<Categoria, Integer> {
    
+    Boolean findByDescrizione(String descrizione);
 }

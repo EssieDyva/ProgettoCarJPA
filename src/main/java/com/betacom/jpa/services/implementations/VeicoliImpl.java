@@ -33,7 +33,7 @@ public class VeicoliImpl implements IVeicoliServices {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void create(VeicoliRequest req) throws Exception {
+    public Veicoli create(VeicoliRequest req) throws Exception {
         log.debug("create {}", req);
 
         validateIds(req);
@@ -48,7 +48,10 @@ public class VeicoliImpl implements IVeicoliServices {
         vei.setAnnoProduzione(req.getAnnoProduzione());
         vei.setModello(req.getModello());
 
-        veiR.save(vei);
+        vei = veiR.save(vei);
+        req.setId(vei.getId());
+
+        return vei;
     }
 
     @Override

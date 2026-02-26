@@ -60,7 +60,7 @@ public class MotoImpl implements IMotoServices {
         Optional<Moto> m = motoR.findById(id); 
         
         if(m.isEmpty()) {
-            throw new AcademyException("Marca non trovata in DB");
+            throw new AcademyException("Moto non trovata in DB");
         }
         
         motoR.deleteById(id);
