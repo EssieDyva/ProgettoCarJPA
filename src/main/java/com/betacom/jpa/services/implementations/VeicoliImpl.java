@@ -54,6 +54,7 @@ public class VeicoliImpl implements IVeicoliServices {
         return vei;
     }
 
+    @Transactional (rollbackFor = Exception.class)
     @Override
     public void update(VeicoliRequest req) throws Exception {
         log.debug("update {}", req);
@@ -78,6 +79,7 @@ public class VeicoliImpl implements IVeicoliServices {
         veiR.save(v);
     }
 
+    @Transactional (rollbackFor = Exception.class)
     @Override
     public void delete(Integer id) throws Exception {
         log.debug("delete {}", id);
