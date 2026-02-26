@@ -19,4 +19,5 @@ public interface IVeicoliServices {
     void update(VeicoliRequest req) throws Exception;
     void delete(Integer id) throws Exception;
     List<VeicoliDTO> list() throws Exception;
+	List<VeicoliDTO> selectAll() throws Exception;
 }

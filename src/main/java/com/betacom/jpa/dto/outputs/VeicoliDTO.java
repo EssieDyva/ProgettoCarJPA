@@ -18,4 +18,8 @@ public class VeicoliDTO {
     private Integer marcaId;
     private Integer annoProduzione;
     private String modello;
+
+    private MacchinaDTO macchina;
+    private MotoDTO moto;
+    private BiciDTO bici;
 }
