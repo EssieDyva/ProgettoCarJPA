@@ -116,6 +116,7 @@ public class MacchinaImpl implements IMacchinaServices {
                         .id(m.getId())
                         .porte(m.getPorte())
                         .cilindrata(m.getCilindrata())
+                        .targa(m.getTarga())
                         .build())
                 .collect(Collectors.toList());
     }
