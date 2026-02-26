@@ -27,9 +27,10 @@ public class TipoAlimentazioneImpl implements ITipoAlimentazioneServices {
 	@Override
 	public void create(TipoAlimentazioneRequest req) throws Exception {
 		log.debug("create {}", req);
+
 		Boolean exist = taR.findByDescription(req.getDescription());
 		
-		if (exist) 
+		if (exist != null) 
 			throw new AcademyException("Tipo alimentazione già presente in DB");
 		
 		TipoAlimentazione tipoA = new TipoAlimentazione();
@@ -48,7 +49,7 @@ public class TipoAlimentazioneImpl implements ITipoAlimentazioneServices {
 			throw new AcademyException("Tipo alimentazione non trovato in DB");
 		
 		Boolean exist = taR.findByDescription(req.getDescription());
-		if (exist) 
+		if (exist != null) 
 			throw new AcademyException("Tipo alimentazione già presente in DB");
 		
 		TipoAlimentazione t = tipoA.get();

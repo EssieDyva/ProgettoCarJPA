@@ -23,7 +23,7 @@ public class CategoriaController {
         HttpStatus status = HttpStatus.OK;
         try {
             categoriaServices.create(request);
-            r.setMsg("ok");
+            r.setMsg("Categoria creata");
             return ResponseEntity.ok(r);
         } catch (Exception e) {
             r.setMsg("Errore: " + e.getMessage());

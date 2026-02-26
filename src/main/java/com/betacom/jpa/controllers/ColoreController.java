@@ -45,7 +45,7 @@ public class ColoreController {
 		HttpStatus status = HttpStatus.OK;
 		try {
 			colS.create(req);
-			r.setMsg("rest_created");
+			r.setMsg("Colore creato");
 		} catch (Exception e) {
 			r.setMsg(e.getMessage());
 			status = HttpStatus.BAD_REQUEST;
@@ -59,7 +59,7 @@ public class ColoreController {
 		HttpStatus status = HttpStatus.OK;
 		try {
 			colS.update(req);
-			r.setMsg("rest_updated");
+			r.setMsg("Colore aggiornato");
 		} catch (Exception e) {
 			r.setMsg(e.getMessage());
 			status = HttpStatus.BAD_REQUEST;
@@ -73,7 +73,7 @@ public class ColoreController {
 		HttpStatus status = HttpStatus.OK;
 		try {
 		colS.delete(id);
-			r.setMsg("rest_deleted");
+			r.setMsg("Colore cancellato");
 		} catch (Exception e) {
 			r.setMsg(e.getMessage());
 			status = HttpStatus.BAD_REQUEST;

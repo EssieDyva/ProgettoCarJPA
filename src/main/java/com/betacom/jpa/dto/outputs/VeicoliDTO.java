@@ -11,7 +11,7 @@ public class VeicoliDTO {
 
     private Integer id;
     private String tipoVeicolo;
-    private String numeroRuote;
+    private Integer numeroRuote;
     private Integer tipoAlimentazioneId;
     private Integer categoriaId;
     private Integer coloreId;

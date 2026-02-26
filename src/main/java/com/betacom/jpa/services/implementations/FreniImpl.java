@@ -42,7 +42,7 @@ public class FreniImpl implements IFreniServices {
 
         Boolean exist = freniR.findByDescription(req.getDescription());
 		
-		if (exist) 
+		if (exist != null) 
 			throw new AcademyException("Freno già presente in DB");
 
 		Freni freni = new Freni();
@@ -57,7 +57,7 @@ public class FreniImpl implements IFreniServices {
 
         Boolean exist = freniR.findByDescription(req.getDescription());
 		
-		if (exist) 
+		if (exist != null) 
 			throw new AcademyException("Freno già presente in DB");
 
 		Freni freni = freniR.findById(req.getId())
