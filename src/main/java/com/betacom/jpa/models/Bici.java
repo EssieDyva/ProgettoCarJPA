@@ -1,9 +1,13 @@
 package com.betacom.jpa.models;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
@@ -41,8 +45,20 @@ public class Bici {
     
     @Column(name = "is_pieghevole")
     private Boolean isPieghevole;
-    
-    
+    @ManyToMany
+    @JoinTable(
+        name = "bici_freni",
+        joinColumns = @JoinColumn(name = "id_bici"),
+        inverseJoinColumns = @JoinColumn(name = "id_freno")
+    )
+    private List<Freni> freni;
+    @ManyToMany
+    @JoinTable(
+        name = "bici_sospensioni",
+        joinColumns = @JoinColumn(name = "id_bici"),
+        inverseJoinColumns = @JoinColumn(name = "id_sospensione")
+    )
+    private List<Sospensioni> sospensioni;
 	
 
 }

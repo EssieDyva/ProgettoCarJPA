@@ -32,4 +32,6 @@ public class Sospensioni {
 			unique = true
 			)
 	private String description;
+	@ManyToMany(mappedBy = "sospensioni")
+	private List<Bici> bici;
 }
