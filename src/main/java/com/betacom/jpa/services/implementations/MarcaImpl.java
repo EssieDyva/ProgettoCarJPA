@@ -38,9 +38,11 @@ public class MarcaImpl implements IMarcaServices {
     public void update(MarcaRequest req) throws Exception {
         log.debug("update {}", req);
         Optional<Marca> m = marcaR.findById(req.getId()); 
+        
         if (m.isEmpty()) {
             throw new AcademyException("Marca non trovata in DB");
         }
+        
         Marca marca = m.get();
         marca.setDescription(req.getDescription());
         marcaR.save(marca);
@@ -50,6 +52,12 @@ public class MarcaImpl implements IMarcaServices {
     @Transactional(rollbackFor = AcademyException.class)
     public void delete(Integer id) throws Exception {
         log.debug("delete {}", id);
+        Optional<Marca> m = marcaR.findById(id); 
+        
+        if (m.isEmpty()) {
+            throw new AcademyException("Marca non trovata in DB");
+        }
+        
         marcaR.deleteById(id);
     }
 

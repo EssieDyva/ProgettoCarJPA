@@ -23,12 +23,12 @@ public class Macchina {
     @JoinColumn(name = "id_veicolo")
     private Veicoli veicoli;
 
-    @Column(name = "numero_porte")
-    private Integer numeroporte;
+    @Column(name = "porte")
+    private Integer porte;
 
-    @Column(name = "capacita_bagagliaio")
-    private Integer capacitaBagagliaio;
-
-    @Column(name = "potenza_cv")
-    private Integer potenzaCv;
+    @Column(name="targa")
+    private String targa;
+    
+    @Column(name="cilindrata")
+    private Integer cilindrata;
 }
