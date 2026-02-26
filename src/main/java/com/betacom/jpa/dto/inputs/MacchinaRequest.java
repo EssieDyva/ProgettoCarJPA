@@ -1,14 +1,15 @@
 package com.betacom.jpa.dto.inputs;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
+@Getter
+@Setter
 @ToString
-public class MacchinaRequest {
+public class MacchinaRequest extends VeicoliRequest {
 
-	private Integer id;
-	private Integer porte;
-	private String targa;
-	private Integer cilindrata;
+    private Integer porte;
+    private String targa;
+    private Integer cilindrata;
 }

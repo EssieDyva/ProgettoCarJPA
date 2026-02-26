@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.betacom.jpa.dto.inputs.BiciRequest;
 import com.betacom.jpa.dto.outputs.BiciDTO;
@@ -25,6 +26,7 @@ public class BiciImpl implements IBiciServices  {
 	private final IBiciRepository bicR;
 	private final IVeicoliRepository veiR;
 	
+	@Transactional (rollbackFor = Exception.class)
 	@Override
 	public void create(BiciRequest req) throws Exception {
 		log.debug("create []", req);
@@ -42,6 +44,7 @@ public class BiciImpl implements IBiciServices  {
 		
 	}
 
+	@Transactional (rollbackFor = Exception.class)
 	@Override
 	public void update(BiciRequest req) throws Exception {
 		log.debug("update {}", req);
@@ -55,6 +58,7 @@ public class BiciImpl implements IBiciServices  {
 		bicR.save(bici);
 	}
 
+	@Transactional (rollbackFor = Exception.class)
 	@Override
 	public void delete(Integer id) throws Exception {
 		log.debug("delete {}", id);
