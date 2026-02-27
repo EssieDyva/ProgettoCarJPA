@@ -18,21 +18,6 @@ public class VeicoliController {
 	
     private final IVeicoliServices veicoliServices;
 
-    @GetMapping("list")
-    public ResponseEntity<Object> list() {
-        Object r;
-        HttpStatus status = HttpStatus.OK;
-
-        try {
-            r = veicoliServices.selectAll();
-        } catch (Exception e) {
-            r = e.getMessage();
-            status = HttpStatus.BAD_REQUEST;
-        }
-
-        return ResponseEntity.status(status).body(r);
-    }
-
     @GetMapping("listByFilter")
     public ResponseEntity<Object> listByFilter(@RequestParam(required = false) Integer id, 
             @RequestParam(required = false) String colore, 
@@ -50,5 +35,35 @@ public class VeicoliController {
 
         return ResponseEntity.status(status).body(r);
     }
+
+    @GetMapping("listByTarga")
+    public ResponseEntity<Object> listByTarga(
+            @RequestParam(required = true) String targa) {
+        Object r;
+        HttpStatus status = HttpStatus.OK;
+
+        try {
+            r = veicoliServices.selectByTarga(targa);
+        } catch (Exception e) {
+            r = e.getMessage();
+            status = HttpStatus.BAD_REQUEST;
+        }
+
+        return ResponseEntity.status(status).body(r);
+    }
 	
+    @GetMapping("list")
+    public ResponseEntity<Object> list() {
+        Object r;
+        HttpStatus status = HttpStatus.OK;
+
+        try {
+            r = veicoliServices.list();
+        } catch (Exception e) {
+            r = e.getMessage();
+            status = HttpStatus.BAD_REQUEST;
+        }
+
+        return ResponseEntity.status(status).body(r);
+    }
 }

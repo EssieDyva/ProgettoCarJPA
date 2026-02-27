@@ -12,12 +12,12 @@ import com.betacom.jpa.models.Veicoli;
 @Repository
 public interface IVeicoliRepository extends JpaRepository<Veicoli, Integer> {
 
-    @Query(name = "veicoli.selectAll")
-    List<Veicoli> selectAll();
-
     @Query(name = "veicoli.selectByFilter")
-    List<Veicoli> selectByFilter(@Param("id") Integer id,
+    List<Veicoli> selectAllByFilter(@Param("id") Integer id,
                                     @Param("colore") String colore,
                                     @Param("categoria") String categoria,
                                     @Param("annoProduzione") Integer annoProduzione);
+
+    @Query(name = "veicoli.selectByTarga")
+    List<Veicoli> selectByTarga(@Param("targa") String targa);
 }

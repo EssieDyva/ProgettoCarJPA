@@ -23,7 +23,7 @@ public class Moto {
 	@JoinColumn(name="id_veicolo")
 	private Veicoli veicoli;
 	
-    @Column(name = "targa")
+    @Column(name = "targa", unique = true)
     private String targa;
 
     @Column(name = "cc")

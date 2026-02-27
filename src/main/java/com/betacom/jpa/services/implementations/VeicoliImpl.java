@@ -96,19 +96,7 @@ public class VeicoliImpl implements IVeicoliServices {
     public List<VeicoliDTO> list() throws Exception {
         log.debug("list");
         List<Veicoli> lV = veiR.findAll();
-        return lV.stream()
-                .map(v -> VeicoliDTO.builder()
-                        .id(v.getId())
-                        .tipoVeicolo(v.getTipoVeicolo())
-                        .numeroRuote(v.getNumeroRuote())
-                        .tipoAlimentazioneId(v.getTipoAlimentazione().getId())
-                        .categoriaId(v.getCategoria().getId())
-                        .coloreId(v.getColore().getId())
-                        .marcaId(v.getMarca().getId())
-                        .annoProduzione(v.getAnnoProduzione())
-                        .modello(v.getModello())
-                        .build())
-                .collect(Collectors.toList());
+        return buildVeicoloDTO(lV);
     }
 
     private void validateIds(VeicoliRequest req) throws AcademyException {
@@ -122,20 +110,20 @@ public class VeicoliImpl implements IVeicoliServices {
         }
     }
 
-	@Override
-	public List<VeicoliDTO> selectAll() throws Exception {
-		log.debug("select ");	
-		
-		List<Veicoli> lV = veiR.selectAll();
-		
-		return buildVeicoloDTO(lV);
-	}
-
     @Override
     public List<VeicoliDTO> selectByFilter(Integer id, String colore, String categoria, Integer annoProduzione) throws Exception {
         log.debug("selectByFilter {} / {} / {} / {} ", id, colore, categoria, annoProduzione);	
 
-		List<Veicoli> lV = veiR.selectByFilter(id, colore, categoria, annoProduzione);
+		List<Veicoli> lV = veiR.selectAllByFilter(id, colore, categoria, annoProduzione);
+		
+		return buildVeicoloDTO(lV);
+    }
+
+    @Override
+    public List<VeicoliDTO> selectByTarga(String targa) throws Exception {
+        log.debug("selectByTarga {} ", targa);	
+
+		List<Veicoli> lV = veiR.selectByTarga(targa);
 		
 		return buildVeicoloDTO(lV);
     }
@@ -172,9 +160,7 @@ public class VeicoliImpl implements IVeicoliServices {
 
 	            .build() 
 	        )
-	        .toList();
+	        .collect(Collectors.toList());
 	}
 
-    
-	
 }
