@@ -26,7 +26,7 @@ public class TipoAlimentazioneController {
 	
 	@GetMapping("list")
 	public ResponseEntity<Object> list() {
-		Object r = new Object();
+		Object r;
 		HttpStatus status = HttpStatus.OK;
 		try {
 			r = taS.list();

@@ -28,7 +28,7 @@ public class ColoreController {
 	
 	@GetMapping("/list")
 	public ResponseEntity<Object> list() {
-		Object r = new Object();
+		Object r;
 		HttpStatus status = HttpStatus.OK;
 		try {
 			r=colS.list();

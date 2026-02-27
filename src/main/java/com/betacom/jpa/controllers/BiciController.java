@@ -25,7 +25,7 @@ public class BiciController {
 	
 	@GetMapping("/list")
 	public ResponseEntity<Object> list() {
-		Object r = new Object();
+		Object r;
 		HttpStatus status = HttpStatus.OK;
 		try {
 			r=bicS.list();

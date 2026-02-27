@@ -20,5 +20,5 @@ public interface IVeicoliServices {
     void delete(Integer id) throws Exception;
     List<VeicoliDTO> list() throws Exception;
 	List<VeicoliDTO> selectAll() throws Exception;
-
+    List<VeicoliDTO> selectByFilter(Integer id, String colore, String categoria, Integer annoProduzione) throws Exception;
 }

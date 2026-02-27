@@ -38,9 +38,7 @@ public class BiciImpl implements IBiciServices {
 
 		ValidateBiciIds(req);
 
-		veiS.create(req);
-		Veicoli v = veiR.findById(req.getId())
-				.orElseThrow(() -> new AcademyException("veicolo non trovato dopo creazione"));
+		Veicoli v = veiS.create(req);
 
 		Bici bici = new Bici();
 		bici.setVeicoli(v);

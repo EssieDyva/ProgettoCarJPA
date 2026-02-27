@@ -131,6 +131,15 @@ public class VeicoliImpl implements IVeicoliServices {
 		return buildVeicoloDTO(lV);
 	}
 
+    @Override
+    public List<VeicoliDTO> selectByFilter(Integer id, String colore, String categoria, Integer annoProduzione) throws Exception {
+        log.debug("selectByFilter {} / {} / {} / {} ", id, colore, categoria, annoProduzione);	
+
+		List<Veicoli> lV = veiR.selectByFilter(id, colore, categoria, annoProduzione);
+		
+		return buildVeicoloDTO(lV);
+    }
+
 	private List<VeicoliDTO> buildVeicoloDTO(List<Veicoli> lV) {
 	    return lV.stream().<VeicoliDTO>map(v -> VeicoliDTO.builder()  
 	            .id(v.getId())
@@ -165,5 +174,7 @@ public class VeicoliImpl implements IVeicoliServices {
 	        )
 	        .toList();
 	}
+
+    
 	
 }
