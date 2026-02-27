@@ -19,10 +19,6 @@ public interface IVeicoliServices {
     void update(VeicoliRequest req) throws Exception;
     void delete(Integer id) throws Exception;
     List<VeicoliDTO> list() throws Exception;
-	//List<VeicoliDTO> selectAll() throws Exception;
+	List<VeicoliDTO> selectAll() throws Exception;
 
-	List<VeicoliDTO> selectAll(Integer id, String tipoVeicolo, Integer numeroRuote, String tipoAlimentazione,
-			String categoria, String colore, String marca, Integer annoProduzione, String modello,
-			Integer porte, String targaMac, Integer cilindrata, String targaMo, Integer cc, Integer numeroMarce,
-			String freno, String sospensioni, Boolean isPieghevole) throws Exception;
 }

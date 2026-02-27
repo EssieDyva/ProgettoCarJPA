@@ -12,5 +12,5 @@ import com.betacom.jpa.models.Veicoli;
 public interface IVeicoliRepository extends JpaRepository<Veicoli, Integer> {
 
     @Query(name = "veicoli.selectAll")
-    List<Veicoli> selectAll(Integer id, String tipoVeicolo, Integer numeroRuote, String tipoAlimentazione, String categoria, String colore, String marca, Integer annoProduzione, String modello, Integer porte, String targaMac, Integer cilindrata, String targaMo, Integer cc, Integer numeroMarce, String freno, String sospensioni, Boolean isPieghevole);
+    List<Veicoli> selectAll();
 }
