@@ -28,6 +28,12 @@ public class MarcaImpl implements IMarcaServices {
     @Transactional(rollbackFor = AcademyException.class)
     public void create(MarcaRequest req) throws Exception {
         log.debug("create {}", req);
+
+        Boolean exist = marcaR.findByDescription(req.getDescription());
+		
+		if (exist != null)
+			throw new AcademyException("Categoria già presente in DB");
+
         Marca marca = new Marca();
         marca.setDescription(req.getDescription());
         marcaR.save(marca);

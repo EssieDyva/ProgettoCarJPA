@@ -26,7 +26,7 @@ public class Macchina {
     @Column(name = "porte")
     private Integer porte;
 
-    @Column(name="targa")
+    @Column(name="targa", unique = true)
     private String targa;
     
     @Column(name="cilindrata")

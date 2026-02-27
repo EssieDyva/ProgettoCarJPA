@@ -23,14 +23,13 @@ public class CategoriaController {
         HttpStatus status = HttpStatus.OK;
         try {
             categoriaServices.create(request);
-            r.setMsg("ok");
-            return ResponseEntity.ok(r);
+            r.setMsg("Categoria creata");
         } catch (Exception e) {
             r.setMsg("Errore: " + e.getMessage());
             status = HttpStatus.BAD_REQUEST;
-            return ResponseEntity.status(status).body(r);
-           
+            
         }
+        return ResponseEntity.status(status).body(r);
     }
     
     @PutMapping("/update")

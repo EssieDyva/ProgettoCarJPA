@@ -15,6 +15,7 @@ import com.betacom.jpa.models.Veicoli;
 import com.betacom.jpa.repository.IMotoRepository;
 import com.betacom.jpa.repository.IVeicoliRepository;
 import com.betacom.jpa.services.interfaces.IMotoServices;
+import com.betacom.jpa.services.interfaces.IVeicoliServices;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,18 +27,19 @@ public class MotoImpl implements IMotoServices {
 
     private final IMotoRepository motoR;
     private final IVeicoliRepository veiR;
+    private final IVeicoliServices veiS;
 
     @Override
     @Transactional(rollbackFor = AcademyException.class)
     public void create(MotoRequest req) throws Exception {
         log.debug("create {}", req);
-        Veicoli v = veiR.findById(req.getId())
-                .orElseThrow(() -> new AcademyException("Veicolo non trovato"));
+        
+        Veicoli v = veiS.create(req);
+        
         Moto moto = new Moto();
-        moto.setId(v.getId());
+        moto.setVeicoli(v);
         moto.setTarga(req.getTarga());
         moto.setCc(req.getCc());
-        moto.setVeicoli(v);
 
         motoR.save(moto);
     }
@@ -48,8 +50,12 @@ public class MotoImpl implements IMotoServices {
         log.debug("update {}", req);
         Moto moto = motoR.findById(req.getId())
                 .orElseThrow(() -> new AcademyException("Moto non trovata"));
+        
         moto.setTarga(req.getTarga());
         moto.setCc(req.getCc());
+        
+        veiS.update(req);
+
         motoR.save(moto);
     }
 
@@ -60,7 +66,7 @@ public class MotoImpl implements IMotoServices {
         Optional<Moto> m = motoR.findById(id); 
         
         if(m.isEmpty()) {
-            throw new AcademyException("Marca non trovata in DB");
+            throw new AcademyException("Moto non trovata in DB");
         }
         
         motoR.deleteById(id);
@@ -73,10 +79,19 @@ public class MotoImpl implements IMotoServices {
         List<Moto> lM = motoR.findAll();
         return lM.stream()
                 .map(m -> MotoDTO.builder()
-                        .id(m.getId())
-                        .targa(m.getTarga())
+                        .id(m.getVeicoli().getId())
+                        .tipoVeicolo(m.getVeicoli().getTipoVeicolo())
+                        .numeroRuote(m.getVeicoli().getNumeroRuote())
+                        .tipoAlimentazioneId(m.getVeicoli().getTipoAlimentazione().getId())
+                        .categoriaId(m.getVeicoli().getCategoria().getId())
+                        .coloreId(m.getVeicoli().getColore().getId())
+                        .marcaId(m.getVeicoli().getMarca().getId())
+                        .annoProduzione(m.getVeicoli().getAnnoProduzione())
+                        .modello(m.getVeicoli().getModello())
                         .cc(m.getCc())
-                        .build())
+                        .targa(m.getTarga())
+                        .build()
+                )
                 .collect(Collectors.toList());
-    }
+            }
 }

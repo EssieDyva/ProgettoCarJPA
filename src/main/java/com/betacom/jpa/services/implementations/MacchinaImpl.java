@@ -4,47 +4,44 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.betacom.jpa.exception.AcademyException;
+
+import lombok.RequiredArgsConstructor;
+
 import com.betacom.jpa.dto.inputs.MacchinaRequest;
-import com.betacom.jpa.dto.inputs.MarcaRequest;
 import com.betacom.jpa.dto.outputs.MacchinaDTO;
-import com.betacom.jpa.dto.outputs.MarcaDTO;
+import com.betacom.jpa.exception.AcademyException;
 import com.betacom.jpa.models.Macchina;
-import com.betacom.jpa.models.Marca;
 import com.betacom.jpa.models.Veicoli;
 import com.betacom.jpa.repository.IMacchinaRepository;
-import com.betacom.jpa.repository.IMarcaRepository;
 import com.betacom.jpa.repository.IVeicoliRepository;
+import com.betacom.jpa.services.interfaces.IVeicoliServices;
 import com.betacom.jpa.services.interfaces.IMacchinaServices;
-import com.betacom.jpa.services.interfaces.IMarcaServices;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class MacchinaImpl implements IMacchinaServices {
 
-    @Autowired
-    private IMacchinaRepository maccR;
-    private IVeicoliRepository veiR;
+    private final IMacchinaRepository maccR;
+    private final IVeicoliRepository veiR;
+    private final IVeicoliServices veiS;
 
     @Override
     @Transactional(rollbackFor = AcademyException.class)
     public void create(MacchinaRequest req) throws Exception {
-    	log.debug("create {}", req);
+        log.debug("create {}", req);
 
-        Veicoli v=veiR.findById(req.getId())
-        		.orElseThrow(()-> new AcademyException("veicolo non trovato"));
+        Veicoli v = veiS.create(req);
 
         Macchina mac = new Macchina();
-        
+        mac.setVeicoli(v);
         mac.setPorte(req.getPorte());
         mac.setTarga(req.getTarga());
         mac.setCilindrata(req.getCilindrata());
-       
 
         maccR.save(mac);
     }
@@ -53,14 +50,15 @@ public class MacchinaImpl implements IMacchinaServices {
     @Transactional(rollbackFor = AcademyException.class)
     public void update(MacchinaRequest req) throws Exception {
         log.debug("update {}", req);
-        Optional<Macchina> m = maccR.findById(req.getId()); 
-        if (m.isEmpty()) {
-            throw new AcademyException("Macchina non trovata in DB");
-        }
-        Macchina macchina = m.get();
+        Macchina macchina = maccR.findById(req.getId())
+                .orElseThrow(() -> new AcademyException("Macchina non trovata in DB"));
+
         macchina.setPorte(req.getPorte());
         macchina.setTarga(req.getTarga());
         macchina.setCilindrata(req.getCilindrata());
+
+        veiS.update(req);
+
         maccR.save(macchina);
     }
 
@@ -71,10 +69,11 @@ public class MacchinaImpl implements IMacchinaServices {
         Optional<Macchina> m = maccR.findById(id); 
         
         if (m.isEmpty()) {
-        	throw new AcademyException("Macchina non trovata");
+            throw new AcademyException("Macchina non trovata");
         }
         
         maccR.deleteById(id);
+        veiR.deleteById(id);
     }
 
     @Override
@@ -82,11 +81,21 @@ public class MacchinaImpl implements IMacchinaServices {
         log.debug("listMacchine");
         List<Macchina> lm =  maccR.findAll();
         return lm.stream()
-                .map(m -> MacchinaDTO.builder()
-                        .id(m.getId())
-                        .porte(m.getPorte())
-                        .cilindrata(m.getCilindrata())
-                        .build())
-                .collect(Collectors.toList());
-    }
+            .map(m -> MacchinaDTO.builder()
+                    .id(m.getVeicoli().getId())
+                    .tipoVeicolo(m.getVeicoli().getTipoVeicolo())
+                    .numeroRuote(m.getVeicoli().getNumeroRuote())
+                    .tipoAlimentazioneId(m.getVeicoli().getTipoAlimentazione().getId())
+                    .categoriaId(m.getVeicoli().getCategoria().getId())
+                    .coloreId(m.getVeicoli().getColore().getId())
+                    .marcaId(m.getVeicoli().getMarca().getId())
+                    .annoProduzione(m.getVeicoli().getAnnoProduzione())
+                    .modello(m.getVeicoli().getModello())
+                    .porte(m.getPorte())
+                    .cilindrata(m.getCilindrata())
+                    .targa(m.getTarga())
+                    .build()
+            )
+            .collect(Collectors.toList());
+        }
 }

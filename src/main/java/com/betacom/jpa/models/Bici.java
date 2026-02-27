@@ -41,8 +41,5 @@ public class Bici {
     
     @Column(name = "is_pieghevole")
     private Boolean isPieghevole;
-    
-    
-	
 
 }

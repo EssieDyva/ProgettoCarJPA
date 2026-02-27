@@ -25,7 +25,7 @@ public class BiciController {
 	
 	@GetMapping("/list")
 	public ResponseEntity<Object> list() {
-		Object r = new Object();
+		Object r;
 		HttpStatus status = HttpStatus.OK;
 		try {
 			r=bicS.list();
@@ -42,7 +42,7 @@ public class BiciController {
 		HttpStatus status = HttpStatus.OK;
 		try {
 			bicS.create(req);
-			r.setMsg("rest_created");
+			r.setMsg("Bici creata");
 		} catch (Exception e) {
 			r.setMsg(e.getMessage());
 			status = HttpStatus.BAD_REQUEST;
@@ -56,7 +56,7 @@ public class BiciController {
 		HttpStatus status = HttpStatus.OK;
 		try {
 			bicS.update(req);
-			r.setMsg("rest_updated");
+			r.setMsg("Bici aggiornata");
 		} catch (Exception e) {
 			r.setMsg(e.getMessage());
 			status = HttpStatus.BAD_REQUEST;
@@ -70,7 +70,7 @@ public class BiciController {
 		HttpStatus status = HttpStatus.OK;
 		try {
 		bicS.delete(id);
-			r.setMsg("rest_deleted");
+			r.setMsg("Bici cancellata");
 		} catch (Exception e) {
 			r.setMsg(e.getMessage());
 			status = HttpStatus.BAD_REQUEST;

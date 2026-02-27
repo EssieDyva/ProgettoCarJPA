@@ -26,7 +26,7 @@ public class TipoAlimentazioneController {
 	
 	@GetMapping("list")
 	public ResponseEntity<Object> list() {
-		Object r = new Object();
+		Object r;
 		HttpStatus status = HttpStatus.OK;
 		try {
 			r = taS.list();
@@ -43,7 +43,7 @@ public class TipoAlimentazioneController {
 		HttpStatus status = HttpStatus.OK;
 		try {
 			taS.create(request);
-			r.setMsg("Abbonamento creato");
+			r.setMsg("Tipo alimentazione creato");
 		} catch (Exception e) {
 			r.setMsg("Errore nella creazione" + e.getMessage());
 			status = HttpStatus.BAD_REQUEST;
@@ -57,9 +57,9 @@ public class TipoAlimentazioneController {
 		HttpStatus status = HttpStatus.OK;
 		try {
 			taS.update(request);
-			r.setMsg("Abbonamento aggiornato");
+			r.setMsg("Tipo alimentazione aggiornato");
 		} catch (Exception e) {
-			r.setMsg("Errore nella creazione" + e.getMessage());
+			r.setMsg("Errore nell'aggiornamento" + e.getMessage());
 			status = HttpStatus.BAD_REQUEST;
 		}
 		return ResponseEntity.status(status).body(r);
@@ -71,7 +71,7 @@ public class TipoAlimentazioneController {
 		HttpStatus status = HttpStatus.OK;
 		try {
 			taS.delete(id);
-			r.setMsg("Abbonamento cancellato");
+			r.setMsg("Tipo alimentazione cancellato");
 		} catch (Exception e) {
 			r.setMsg("Errore nella cancellazione" + e.getMessage());
 			status = HttpStatus.BAD_REQUEST;

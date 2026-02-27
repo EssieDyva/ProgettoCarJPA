@@ -28,6 +28,12 @@ public class SospensioniImpl implements ISospensioniServices {
     @Transactional(rollbackFor = AcademyException.class)
     public void create(SospensioniRequest req) throws Exception {
         log.debug("create {}", req);
+
+        Boolean exist = sospensioniR.findByDescription(req.getDescription());
+		
+		if (exist != null)
+			throw new AcademyException("Categoria già presente in DB");
+
         Sospensioni marca = new Sospensioni();
         marca.setDescription(req.getDescription());
         sospensioniR.save(marca);

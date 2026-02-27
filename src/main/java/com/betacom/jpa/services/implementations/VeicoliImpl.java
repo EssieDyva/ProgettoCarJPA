@@ -2,19 +2,19 @@ package com.betacom.jpa.services.implementations;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.betacom.jpa.dto.inputs.VeicoliRequest;
+import com.betacom.jpa.dto.outputs.MacchinaDTO;
+import com.betacom.jpa.dto.outputs.MotoDTO;
+import com.betacom.jpa.dto.outputs.BiciDTO;
 import com.betacom.jpa.dto.outputs.VeicoliDTO;
 import com.betacom.jpa.exception.AcademyException;
 import com.betacom.jpa.models.*;
-import com.betacom.jpa.repository.ICategoriaRepository;
-import com.betacom.jpa.repository.IColoreRepository;
-import com.betacom.jpa.repository.IMarcaRepository;
-import com.betacom.jpa.repository.ITipoAlimentazioneRepository;
-import com.betacom.jpa.repository.IVeicoliRepository;
+import com.betacom.jpa.repository.*;
 import com.betacom.jpa.services.interfaces.IVeicoliServices;
 
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class VeicoliImpl implements IVeicoliServices {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void create(VeicoliRequest req) throws Exception {
+    public Veicoli create(VeicoliRequest req) throws Exception {
         log.debug("create {}", req);
 
         validateIds(req);
@@ -48,9 +48,13 @@ public class VeicoliImpl implements IVeicoliServices {
         vei.setAnnoProduzione(req.getAnnoProduzione());
         vei.setModello(req.getModello());
 
-        veiR.save(vei);
+        vei = veiR.save(vei);
+        req.setId(vei.getId());
+
+        return vei;
     }
 
+    @Transactional (rollbackFor = Exception.class)
     @Override
     public void update(VeicoliRequest req) throws Exception {
         log.debug("update {}", req);
@@ -75,6 +79,7 @@ public class VeicoliImpl implements IVeicoliServices {
         veiR.save(v);
     }
 
+    @Transactional (rollbackFor = Exception.class)
     @Override
     public void delete(Integer id) throws Exception {
         log.debug("delete {}", id);
@@ -91,19 +96,7 @@ public class VeicoliImpl implements IVeicoliServices {
     public List<VeicoliDTO> list() throws Exception {
         log.debug("list");
         List<Veicoli> lV = veiR.findAll();
-        return lV.stream()
-                .map(v -> VeicoliDTO.builder()
-                        .id(v.getId())
-                        .tipoVeicolo(v.getTipoVeicolo())
-                        .numeroRuote(v.getNumeroRuote())
-                        .tipoAlimentazioneId(v.getTipoAlimentazione().getId())
-                        .categoriaId(v.getCategoria().getId())
-                        .coloreId(v.getColore().getId())
-                        .marcaId(v.getMarca().getId())
-                        .annoProduzione(v.getAnnoProduzione())
-                        .modello(v.getModello())
-                        .build())
-                .toList();
+        return buildVeicoloDTO(lV);
     }
 
     private void validateIds(VeicoliRequest req) throws AcademyException {
@@ -116,5 +109,58 @@ public class VeicoliImpl implements IVeicoliServices {
             throw new AcademyException("Un ID inserito non esiste nella corrispettiva tabella");
         }
     }
+
+    @Override
+    public List<VeicoliDTO> selectByFilter(Integer id, String colore, String categoria, Integer annoProduzione) throws Exception {
+        log.debug("selectByFilter {} / {} / {} / {} ", id, colore, categoria, annoProduzione);	
+
+		List<Veicoli> lV = veiR.selectAllByFilter(id, colore, categoria, annoProduzione);
+		
+		return buildVeicoloDTO(lV);
+    }
+
+    @Override
+    public List<VeicoliDTO> selectByTarga(String targa) throws Exception {
+        log.debug("selectByTarga {} ", targa);	
+
+		List<Veicoli> lV = veiR.selectByTarga(targa);
+		
+		return buildVeicoloDTO(lV);
+    }
+
+	private List<VeicoliDTO> buildVeicoloDTO(List<Veicoli> lV) {
+	    return lV.stream().<VeicoliDTO>map(v -> VeicoliDTO.builder()  
+	            .id(v.getId())
+	            .tipoVeicolo(v.getTipoVeicolo())
+	            .numeroRuote(v.getNumeroRuote())
+	            .tipoAlimentazioneId(v.getTipoAlimentazione().getId())
+	            .categoriaId(v.getCategoria().getId())
+	            .coloreId(v.getColore().getId())
+	            .marcaId(v.getMarca().getId())
+	            .annoProduzione(v.getAnnoProduzione())
+	            .modello(v.getModello())
+	            
+	            .macchina(v.getMacchina() == null ? null : MacchinaDTO.builder()
+	                .porte(v.getMacchina().getPorte())
+	                .targa(v.getMacchina().getTarga())
+	                .cilindrata(v.getMacchina().getCilindrata())
+	                .build())
+	                
+	            .moto(v.getMoto() == null ? null : MotoDTO.builder()
+	                .targa(v.getMoto().getTarga())
+	                .cc(v.getMoto().getCc())
+	                .build())
+
+	            .bici(v.getBici() == null ? null : BiciDTO.builder()
+	                .numeroMarce(v.getBici().getNumeroMarce())
+	                .idFreno(v.getBici().getIdFreno())
+	                .idSospensioni(v.getBici().getIdSospensioni())
+	                .isPieghevole(v.getBici().getIsPieghevole())
+	                .build())
+
+	            .build() 
+	        )
+	        .collect(Collectors.toList());
+	}
 
 }
