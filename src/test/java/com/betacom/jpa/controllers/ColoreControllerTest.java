@@ -43,8 +43,8 @@ public class ColoreControllerTest {
 
 		log.debug("Create colore");
 		ColoreRequest req = new ColoreRequest();
-		//req.setId(1);
-		req.setDescription("Rosso");
+		req.setId(1);
+		req.setDescription("123");
 		ResponseEntity<Resp> resp = coloreC.create(req);
 		assertEquals(HttpStatus.OK, resp.getStatusCode());
 		Resp r = (Resp)resp.getBody();
