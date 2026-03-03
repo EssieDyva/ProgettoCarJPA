@@ -8,5 +8,5 @@ import com.betacom.jpa.models.Colore;
 @Repository
 public interface IColoreRepository extends JpaRepository<Colore, Integer> {
 
-	Boolean findByDescription(String description);
+	boolean existsByDescription(String description);
 }

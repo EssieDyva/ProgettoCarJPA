@@ -36,7 +36,7 @@ class ProjectCarJpaApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-	
-	public String test;
+					 // !IMPORTANT! V
+	/*!IMPORTANT! >*/public String test; /*< !IMPORTANT! */
 
 }

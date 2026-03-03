@@ -35,16 +35,16 @@ public class ColoreControllerTest {
 	public void myTest() {
 		createColore();
 		updateColore();
-		deleteColore();
 		list();
+		deleteColore();
 	}
 
 	public void createColore() {
 
 		log.debug("Create colore");
 		ColoreRequest req = new ColoreRequest();
-		req.setId(1);
 		req.setDescription("123");
+		
 		ResponseEntity<Resp> resp = coloreC.create(req);
 		assertEquals(HttpStatus.OK, resp.getStatusCode());
 		Resp r = (Resp)resp.getBody();
@@ -72,24 +72,22 @@ public class ColoreControllerTest {
 		log.debug("******* Update colore  *******");
 		
 		ColoreRequest req = new ColoreRequest();
-		req.setId(2);
-		req.setDescription("Bianco");
+		req.setId(1);
+		req.setDescription("456");
 	
 		ResponseEntity<Resp> resp = coloreC.update(req);
 	
-		
 		assertEquals(HttpStatus.OK, resp.getStatusCode());
 		Resp r = (Resp)resp.getBody();
 		log.debug(r.getMsg());
 		Assertions.assertThat(r.getMsg()).isEqualTo("Colore aggiornato");
-		
-				
+			
 	}
 
 	public void deleteColore() {
 		log.debug("******* delete colore  *******");
 		
-		ResponseEntity<Resp> resp = coloreC.delete(2);
+		ResponseEntity<Resp> resp = coloreC.delete(1);
 	
 		assertEquals(HttpStatus.OK, resp.getStatusCode());
 		Resp r = (Resp)resp.getBody();

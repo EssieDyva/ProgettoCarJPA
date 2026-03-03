@@ -27,13 +27,13 @@ public class ColoreImpl implements IColoreServices {
 	@Override
 	public void create(ColoreRequest req) throws Exception {
 		log.debug("create {}", req);
-		Boolean exists = colR.findByDescription(req.getDescription());
 		
-		if(exists != null)
-			throw new AcademyException("Colore presente in db:" + req.getDescription());
+		if (colR.existsByDescription(req.getDescription().trim().toUpperCase())) {
+		    throw new AcademyException("Colore presente in db:" + req.getDescription());
+		}
 		
 		Colore co = new Colore();
-		co.setDescription(req.getDescription());
+		co.setDescription(req.getDescription().trim().toUpperCase());
 		
 		colR.save(co);
 	}
@@ -44,12 +44,15 @@ public class ColoreImpl implements IColoreServices {
 		log.debug("update {}", req);
 		Colore co = colR.findById(req.getId())
 				.orElseThrow(() -> new AcademyException("Colore non trovato"));
-		if (req.getDescription() != null) {
-			if (colR.findByDescription(req.getDescription().trim().toUpperCase())) {
-				throw new AcademyException("Colore presente in db:" + req.getDescription());		
-			}
-			co.setDescription(req.getDescription().trim().toUpperCase());
+		
+		String newDesc = req.getDescription().trim().toUpperCase();
+
+		if (!co.getDescription().equals(newDesc) &&
+		        colR.existsByDescription(newDesc)) {
+		    throw new AcademyException("Colore presente in db:" + newDesc);
 		}
+
+		co.setDescription(newDesc);
 		colR.save(co);
 	}
 
